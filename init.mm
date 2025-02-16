@@ -1,9 +1,6 @@
 #import <UIKit/UIKit.h>
 #import <objc/runtime.h>
 #import <substrate.h>
-#import <algorithm>
-#import <ranges>
-#import <cstring>
 
 namespace mbk_UIKBRenderConfig {
     namespace animatedBackground {
@@ -13,8 +10,8 @@ namespace mbk_UIKBRenderConfig {
         }
         void hook(void) {
             MSHookMessageEx(
-                NSClassFromString(@"UIKBRenderConfig"),
-                NSSelectorFromString(@"animatedBackground"),
+                objc_lookUpClass("UIKBRenderConfig"),
+                sel_registerName("animatedBackground"),
                 reinterpret_cast<IMP>(&custom),
                 reinterpret_cast<IMP *>(&original)
             );
@@ -28,8 +25,8 @@ namespace mbk_UIKBRenderConfig {
         }
         void hook(void) {
             MSHookMessageEx(
-                NSClassFromString(@"UIKBRenderConfig"),
-                NSSelectorFromString(@"setAnimatedBackground:"),
+                objc_lookUpClass("UIKBRenderConfig"),
+                sel_registerName("setAnimatedBackground:"),
                 reinterpret_cast<IMP>(&custom),
                 reinterpret_cast<IMP *>(&original)
             );
